@@ -3,22 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamFetch - Universal HD Video & Audio Downloader</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>StreamFetch - Material HD Downloader</title>
+    <!-- Roboto Font & Material Symbols for Material Design UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    
     <style>
         :root {
-            /* Theme Color Base: hsla(93 10.9% 15.6% / 0.8) */
-            --bg-color: hsla(93, 10.9%, 15.6%, 0.95);
-            --card-bg: hsla(93, 10.9%, 15.6%, 0.8);
-            --card-glass: rgba(255, 255, 255, 0.05);
-            --border-color: hsla(93, 10.9%, 40%, 0.25);
-            --accent-green: #84cc16;
-            --accent-green-hover: #65a30d;
-            --text-main: #f8fafc;
-            --text-muted: #cbd5e1;
+            /* Black & Metallic Silver Color Palette */
+            --bg-black: #0a0a0c;
+            --surface-dark: #121216;
+            --silver-primary: #e2e8f0;
+            --silver-muted: #94a3b8;
+            --silver-accent: #cbd5e1;
+            --silver-gradient: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            --silver-border: rgba(226, 232, 240, 0.15);
+            --card-elevation: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
         }
 
-        /* Rule 3: Media & Overflow Prevention */
+        /* Fluid CSS Rules & Global Reset */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -28,9 +31,9 @@
         html, body {
             max-width: 100vw;
             overflow-x: hidden;
-            background: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--silver-primary);
+            font-family: 'Roboto', sans-serif;
             min-height: 100vh;
         }
 
@@ -39,10 +42,10 @@
             height: auto;
         }
 
-        /* Rule 2: Modern Layout - Flexbox Container */
-        .wrapper {
+        /* Responsive Layout Container */
+        .app-container {
             width: 90%;
-            max-width: 72rem;
+            max-width: 70rem;
             margin: 0 auto;
             padding: clamp(1.5rem, calc(1rem + 3vw), 3.5rem) 1rem;
             display: flex;
@@ -51,16 +54,14 @@
             align-items: center;
         }
 
-        /* Main Container Card */
-        .main-card {
+        /* Material Design Glass Container */
+        .md-card {
             width: 100%;
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
+            background: var(--surface-dark);
+            border: 1px solid var(--silver-border);
             border-radius: 1.5rem;
             padding: clamp(1.5rem, calc(1rem + 2vw), 3rem);
-            box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.4);
+            box-shadow: var(--card-elevation);
         }
 
         .header {
@@ -68,210 +69,236 @@
             margin-bottom: clamp(1.5rem, calc(1rem + 2vw), 2.5rem);
         }
 
-        /* Rule 4: Fluid Typography using clamp() with rem + vw */
         .header h1 {
-            font-size: clamp(1.75rem, calc(1.2rem + 2.2vw), 3rem);
+            font-size: clamp(1.8rem, calc(1.2rem + 2.2vw), 3.2rem);
             font-weight: 700;
-            color: var(--text-main);
+            background: var(--silver-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
         .header p {
-            font-size: clamp(0.9rem, calc(0.85rem + 0.5vw), 1.15rem);
-            color: var(--text-muted);
+            font-size: clamp(0.9rem, calc(0.85rem + 0.4vw), 1.15rem);
+            color: var(--silver-muted);
         }
 
-        /* Input Form Layout */
-        .input-form {
+        /* Material Input Field */
+        .md-form {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            position: relative;
             width: 100%;
         }
 
         @media (min-width: 48rem) {
-            .input-form {
+            .md-form {
                 flex-direction: row;
             }
         }
 
-        .input-field {
+        .input-wrapper {
+            position: relative;
             flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper .material-symbols-outlined {
+            position: absolute;
+            left: 1.2rem;
+            color: var(--silver-muted);
+        }
+
+        .md-input {
             width: 100%;
-            padding: 1rem 1.25rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
+            padding: 1.1rem 1.2rem 1.1rem 3.2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--silver-border);
             border-radius: 0.85rem;
-            color: var(--text-main);
+            color: #ffffff;
             font-size: clamp(0.9rem, calc(0.85rem + 0.3vw), 1rem);
             outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .input-field:focus {
-            border-color: var(--accent-green);
-            box-shadow: 0 0 0.9rem rgba(132, 204, 22, 0.25);
+        .md-input:focus {
+            border-color: var(--silver-primary);
+            box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
         }
 
-        .btn-submit {
+        /* Material Silver Button */
+        .md-btn {
             padding: 1rem 2rem;
-            background: var(--accent-green);
-            color: #0d1503;
+            background: var(--silver-gradient);
+            color: #000000;
             border: none;
             border-radius: 0.85rem;
             font-size: clamp(0.95rem, calc(0.9rem + 0.3vw), 1.05rem);
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             white-space: nowrap;
+            box-shadow: 0 0.25rem 1rem rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .btn-submit:hover {
-            background: var(--accent-green-hover);
+        .md-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1.5rem rgba(255, 255, 255, 0.35);
         }
 
-        /* Loading Spinner */
-        .spinner {
+        /* Spinner Animation */
+        .md-spinner {
             display: none;
-            width: 1.25rem;
-            height: 1.25rem;
-            border: 3px solid rgba(0, 0, 0, 0.2);
-            border-top-color: #0d1503;
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 3px solid rgba(0,0,0,0.3);
+            border-top-color: #000;
             border-radius: 50%;
-            animation: rotate 0.8s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes rotate {
+        @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        .error-message {
+        .error-banner {
             display: none;
-            color: #f87171;
+            color: #ff6b6b;
             margin-top: 1rem;
             text-align: center;
             font-size: 0.95rem;
         }
 
-        /* Results Display Card */
-        .result-panel {
+        /* Media Display & Options Section */
+        .media-result {
             display: none;
             margin-top: 2rem;
             padding: clamp(1rem, calc(0.8rem + 1vw), 1.75rem);
-            background: var(--card-glass);
-            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--silver-border);
             border-radius: 1rem;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        .meta-container {
+        .media-meta {
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
         }
 
         @media (min-width: 40rem) {
-            .meta-container {
+            .media-meta {
                 flex-direction: row;
                 align-items: center;
             }
         }
 
-        .thumb-preview {
+        .media-thumb {
             width: 100%;
             max-width: 16rem;
             border-radius: 0.75rem;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--silver-border);
             aspect-ratio: 16 / 9;
             object-fit: cover;
         }
 
-        .meta-details {
+        .media-info {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
 
-        .meta-details h3 {
+        .media-info h3 {
             font-size: clamp(1.05rem, calc(0.95rem + 0.5vw), 1.35rem);
+            color: #ffffff;
             line-height: 1.3;
         }
 
-        .badge {
+        .silver-badge {
             display: inline-block;
             padding: 0.3rem 0.6rem;
-            background: rgba(132, 204, 22, 0.15);
-            color: var(--accent-green);
+            background: rgba(226, 232, 240, 0.1);
+            color: var(--silver-primary);
+            border: 1px solid var(--silver-border);
             border-radius: 0.4rem;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 500;
             width: fit-content;
         }
 
-        /* Options Download Section */
-        .download-controls {
+        /* Download Selectors Grid */
+        .download-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
         }
 
         @media (min-width: 40rem) {
-            .download-controls {
+            .download-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        .control-group {
+        .select-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
 
-        .control-group label {
+        .select-group label {
             font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 600;
+            color: var(--silver-muted);
         }
 
-        .select-dropdown {
+        .md-select {
             width: 100%;
             padding: 0.8rem 1rem;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-color);
+            background: rgba(18, 18, 22, 0.9);
+            border: 1px solid var(--silver-border);
             border-radius: 0.6rem;
-            color: var(--text-main);
+            color: var(--silver-primary);
             outline: none;
             font-size: 0.9rem;
         }
 
-        .btn-download-action {
+        .action-link {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            padding: 0.8rem 1.25rem;
-            background: var(--accent-green);
-            color: #0d1503;
+            padding: 0.85rem 1.25rem;
+            background: var(--silver-primary);
+            color: #000000;
             text-decoration: none;
             border-radius: 0.6rem;
             font-weight: 700;
             font-size: 0.9rem;
             margin-top: auto;
-            transition: opacity 0.2s;
+            transition: background 0.2s;
         }
 
-        .btn-download-action:hover {
-            opacity: 0.9;
+        .action-link:hover {
+            background: #ffffff;
         }
 
-        /* Rule 2: Grid for Feature Cards Showcase */
+        .action-link.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--silver-primary);
+            border: 1px solid var(--silver-border);
+        }
+
+        .action-link.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Feature Showcase Grid */
         .features-grid {
             width: 100%;
             display: grid;
@@ -279,228 +306,243 @@
             gap: clamp(1rem, calc(0.8rem + 1vw), 1.75rem);
         }
 
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .feature-item {
+            background: var(--surface-dark);
+            border: 1px solid var(--silver-border);
             border-radius: 1.25rem;
             padding: 1.75rem;
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
+            box-shadow: var(--card-elevation);
             transition: transform 0.3s ease;
         }
 
-        .feature-card:hover {
+        .feature-item:hover {
             transform: translateY(-5px);
         }
 
-        .feature-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            background: rgba(132, 204, 22, 0.15);
-            border-radius: 0.6rem;
+        .feature-icon-wrapper {
+            width: 2.8rem;
+            height: 2.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--silver-border);
+            border-radius: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            fill: var(--accent-green);
+            color: var(--silver-primary);
         }
 
-        .feature-card h4 {
+        .feature-item h4 {
             font-size: clamp(1.05rem, calc(1rem + 0.3vw), 1.2rem);
-            color: var(--text-main);
+            color: #ffffff;
         }
 
-        .feature-card p {
+        .feature-item p {
             font-size: clamp(0.85rem, calc(0.8rem + 0.2vw), 0.95rem);
-            color: var(--text-muted);
+            color: var(--silver-muted);
             line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <!-- Main Downloader App Card -->
-    <div class="main-card">
+<div class="app-container">
+    <!-- Primary App Interface -->
+    <div class="md-card">
         <div class="header">
-            <h1>Universal StreamFetch</h1>
-            <p>Download original quality videos & audio files from any platform instantly</p>
+            <h1>StreamFetch Engine</h1>
+            <p>Download original quality videos & extracted audio from any website</p>
         </div>
 
-        <div class="input-form">
-            <input type="text" id="urlInput" class="input-field" placeholder="Paste video URL here (YouTube, Facebook, Instagram, TikTok...)" />
-            <button class="btn-submit" id="submitBtn" onclick="fetchVideoData()">
-                <span class="spinner" id="btnSpinner"></span>
+        <div class="md-form">
+            <div class="input-wrapper">
+                <span class="material-symbols-outlined">link</span>
+                <input type="text" id="urlInput" class="md-input" placeholder="Paste link here (YouTube, Facebook, Instagram, TikTok...)" />
+            </div>
+            <button class="md-btn" id="submitBtn" onclick="processLink()">
+                <span class="md-spinner" id="loader"></span>
+                <span class="material-symbols-outlined" id="btnIcon">download</span>
                 <span id="btnText">Fetch Media</span>
             </button>
         </div>
 
-        <div class="error-message" id="errorContainer"></div>
+        <div class="error-banner" id="errorMessage"></div>
 
-        <!-- Video Result Panel -->
-        <div class="result-panel" id="resultPanel">
-            <div class="meta-container">
-                <img id="metaThumb" class="thumb-preview" src="" alt="Thumbnail Preview" />
-                <div class="meta-details">
-                    <span class="badge" id="metaOriginalRes">Original 1080p</span>
-                    <h3 id="metaTitle">Video Title Header</h3>
-                    <p id="metaAuthor" style="font-size:0.85rem; color: var(--text-muted);"></p>
+        <!-- Download Details Panel -->
+        <div class="media-result" id="resultCard">
+            <div class="media-meta">
+                <img id="thumbImg" class="media-thumb" src="" alt="Media Thumbnail" />
+                <div class="media-info">
+                    <span class="silver-badge" id="maxResBadge">Original 1080p</span>
+                    <h3 id="videoTitle"></h3>
+                    <p id="videoMetaText" style="font-size:0.85rem; color: var(--silver-muted);"></p>
                 </div>
             </div>
 
-            <div class="download-controls">
-                <!-- Video Quality Selector -->
-                <div class="control-group">
-                    <label for="videoResSelect">Select Video Quality:</label>
-                    <select id="videoResSelect" class="select-dropdown"></select>
-                    <a id="downloadVideoBtn" href="#" target="_blank" download class="btn-download-action">
-                        Download Selected Video
+            <div class="download-grid">
+                <!-- Video Formats Dropdown -->
+                <div class="select-group">
+                    <label for="videoQualitySelect">Select Video Quality:</label>
+                    <select id="videoQualitySelect" class="md-select"></select>
+                    <a id="downloadVideoBtn" href="#" target="_blank" download class="action-link">
+                        <span class="material-symbols-outlined">movie</span> Download Video
                     </a>
                 </div>
 
-                <!-- Audio Only Selector -->
-                <div class="control-group">
-                    <label for="audioSelect">Select Audio Format:</label>
-                    <select id="audioSelect" class="select-dropdown"></select>
-                    <a id="downloadAudioBtn" href="#" target="_blank" download class="btn-download-action" style="background: rgba(255,255,255,0.15); color: #fff;">
-                        Download Audio Only
+                <!-- Audio Formats Dropdown -->
+                <div class="select-group">
+                    <label for="audioQualitySelect">Select Audio Format:</label>
+                    <select id="audioQualitySelect" class="md-select"></select>
+                    <a id="downloadAudioBtn" href="#" target="_blank" download class="action-link secondary">
+                        <span class="material-symbols-outlined">audiotrack</span> Download Audio
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Features Showcase Cards Grid -->
+    <!-- Feature Showcase Cards -->
     <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        <div class="feature-item">
+            <div class="feature-icon-wrapper">
+                <span class="material-symbols-outlined">high_quality</span>
             </div>
             <h4>Original Quality</h4>
-            <p>Fetches maximum native resolution files straight from source CDN servers without compression losses.</p>
+            <p>Direct source resolution link extraction including 4K, 1080p, 720p streams without re-encoding loss.</p>
         </div>
 
-        <div class="feature-card">
-            <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        <div class="feature-item">
+            <div class="feature-icon-wrapper">
+                <span class="material-symbols-outlined">music_note</span>
             </div>
-            <h4>Audio Extract (MP3/M4A)</h4>
-            <p>Isolate and extract high-bitrate audio streams directly for offline music playback.</p>
+            <h4>Audio Extraction</h4>
+            <p>Convert and extract high-bitrate standalone MP3, M4A, and AAC sound tracks seamlessly.</p>
         </div>
 
-        <div class="feature-card">
-            <div class="feature-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+        <div class="feature-item">
+            <div class="feature-icon-wrapper">
+                <span class="material-symbols-outlined">public</span>
             </div>
-            <h4>Multi-Platform Support</h4>
-            <p>Compatible with YouTube, Instagram Reels, Facebook Videos, TikTok, Twitter, Vimeo, and 1000+ sites.</p>
+            <h4>Universal Engine</h4>
+            <p>Supports URL link resolving across YouTube Shorts, Facebook, Instagram Reels, TikTok, Vimeo, and more.</p>
         </div>
     </div>
 </div>
 
 <script>
-    let currentData = null;
+    // -------------------------------------------------------------
+    // IMPORTANT: Enter your live Render Backend URL below!
+    // Example: const BACKEND_URL = 'https://your-api.onrender.com';
+    // -------------------------------------------------------------
+    const BACKEND_URL = 'https://freedownload-tzzo.onrender.com';
 
-    async function fetchVideoData() {
+    async function processLink() {
         const urlInput = document.getElementById('urlInput').value.trim();
         const submitBtn = document.getElementById('submitBtn');
-        const btnSpinner = document.getElementById('btnSpinner');
+        const loader = document.getElementById('loader');
+        const btnIcon = document.getElementById('btnIcon');
         const btnText = document.getElementById('btnText');
-        const errorContainer = document.getElementById('errorContainer');
-        const resultPanel = document.getElementById('resultPanel');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultCard = document.getElementById('resultCard');
 
         if (!urlInput) {
-            showError('Please enter a media link first.');
+            displayError('Please paste a valid video or media link!');
             return;
         }
 
-        // Reset UI State
-        errorContainer.style.display = 'none';
-        resultPanel.style.display = 'none';
-        btnSpinner.style.display = 'inline-block';
+        // Reset UI States
+        errorMessage.style.display = 'none';
+        resultCard.style.display = 'none';
+        loader.style.display = 'inline-block';
+        btnIcon.style.display = 'none';
         btnText.innerText = 'Extracting...';
         submitBtn.disabled = true;
 
         try {
-            const response = await fetch('/api/fetch-info', {
+            const apiEndpoint = BACKEND_URL.endsWith('/') 
+                ? `${BACKEND_URL}api/fetch-info` 
+                : `${BACKEND_URL}/api/fetch-info`;
+
+            const response = await fetch(apiEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: urlInput })
             });
 
-            const result = await response.json();
+            const resData = await response.json();
 
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || 'Failed to parse video formats.');
+            if (!response.ok || !resData.success) {
+                throw new Error(resData.error || 'Could not fetch media streams.');
             }
 
-            currentData = result.data;
-            renderResults(currentData);
+            renderMediaOptions(resData.data);
 
         } catch (err) {
-            showError(err.message);
+            displayError(err.message || 'Connection failed. Ensure Backend URL is set correctly.');
         } finally {
-            btnSpinner.style.display = 'none';
+            loader.style.display = 'none';
+            btnIcon.style.display = 'inline-block';
             btnText.innerText = 'Fetch Media';
             submitBtn.disabled = false;
         }
     }
 
-    function renderResults(data) {
-        document.getElementById('metaThumb').src = data.thumbnail;
-        document.getElementById('metaTitle').innerText = data.title;
-        document.getElementById('metaAuthor').innerText = `Source: ${data.uploader} • Duration: ${data.duration}`;
-        document.getElementById('metaOriginalRes').innerText = `Max Quality: ${data.original_resolution}`;
+    function renderMediaOptions(data) {
+        document.getElementById('thumbImg').src = data.thumbnail;
+        document.getElementById('videoTitle').innerText = data.title;
+        document.getElementById('videoMetaText').innerText = `Author: ${data.uploader} • Duration: ${data.duration}`;
+        document.getElementById('maxResBadge').innerText = `Max Quality: ${data.original_resolution}`;
 
-        // Populate Video Resolution Options
-        const videoSelect = document.getElementById('videoResSelect');
+        // Populate Video Dropdown
+        const videoSelect = document.getElementById('videoQualitySelect');
         videoSelect.innerHTML = '';
-        if (data.video_formats.length > 0) {
-            data.video_formats.forEach((v, index) => {
+        if (data.video_formats && data.video_formats.length > 0) {
+            data.video_formats.forEach(v => {
                 const opt = document.createElement('option');
                 opt.value = v.download_url;
                 opt.innerText = v.label;
                 videoSelect.appendChild(opt);
             });
-            updateDownloadLink('videoResSelect', 'downloadVideoBtn');
+            bindDownloadButton('videoQualitySelect', 'downloadVideoBtn');
         } else {
-            videoSelect.innerHTML = '<option>No Video Streams Found</option>';
+            videoSelect.innerHTML = '<option>No Video Streams Available</option>';
         }
 
-        // Populate Audio Options
-        const audioSelect = document.getElementById('audioSelect');
+        // Populate Audio Dropdown
+        const audioSelect = document.getElementById('audioQualitySelect');
         audioSelect.innerHTML = '';
-        if (data.audio_formats.length > 0) {
-            data.audio_formats.forEach((a) => {
+        if (data.audio_formats && data.audio_formats.length > 0) {
+            data.audio_formats.forEach(a => {
                 const opt = document.createElement('option');
                 opt.value = a.download_url;
                 opt.innerText = a.label;
                 audioSelect.appendChild(opt);
             });
-            updateDownloadLink('audioSelect', 'downloadAudioBtn');
+            bindDownloadButton('audioQualitySelect', 'downloadAudioBtn');
         } else {
-            audioSelect.innerHTML = '<option>No Audio Streams Found</option>';
+            audioSelect.innerHTML = '<option>No Audio Streams Available</option>';
         }
 
-        // Bind dropdown dynamic link changes
-        videoSelect.onchange = () => updateDownloadLink('videoResSelect', 'downloadVideoBtn');
-        audioSelect.onchange = () => updateDownloadLink('audioSelect', 'downloadAudioBtn');
+        videoSelect.onchange = () => bindDownloadButton('videoQualitySelect', 'downloadVideoBtn');
+        audioSelect.onchange = () => bindDownloadButton('audioQualitySelect', 'downloadAudioBtn');
 
-        document.getElementById('resultPanel').style.display = 'flex';
+        document.getElementById('resultCard').style.display = 'flex';
     }
 
-    function updateDownloadLink(selectId, btnId) {
-        const selectEl = document.getElementById(selectId);
-        const btnEl = document.getElementById(btnId);
-        if (selectEl.value) {
-            btnEl.href = selectEl.value;
+    function bindDownloadButton(selectId, btnId) {
+        const select = document.getElementById(selectId);
+        const btn = document.getElementById(btnId);
+        if (select.value) {
+            btn.href = select.value;
         }
     }
 
-    function showError(msg) {
-        const errorContainer = document.getElementById('errorContainer');
-        errorContainer.innerText = msg;
-        errorContainer.style.display = 'block';
+    function displayError(msg) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.innerText = msg;
+        errorMessage.style.display = 'block';
     }
 </script>
 
